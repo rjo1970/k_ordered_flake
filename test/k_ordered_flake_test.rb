@@ -48,7 +48,7 @@ class KOrderedFlakeTest < Minitest::Test
 
   def test_flakes_are_sequentially_ordered
     original = (0..500).to_a.collect {|x| KOrderedFlake::flake }
-    sorted = original.sort
+    sorted = original.shuffle.sort
     assert original == sorted
   end
 

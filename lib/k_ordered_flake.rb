@@ -3,6 +3,7 @@ require "k_ordered_flake/version"
 require "k_ordered_flake/exceptions"
 require "date"
 require "macaddr"
+require "digest"
 
 module KOrderedFlake
 
@@ -11,7 +12,9 @@ module KOrderedFlake
   end
 
   def self.identity
-    Mac.address.split(":").join("").to_i(16)
+    mac = Mac.address.split(':').join('')
+    code = Digest::SHA1.hexdigest(mac)[28..-1]
+    code.to_i(16)
   end
 
   STATE = Concurrent::Atom.new({
@@ -41,7 +44,7 @@ module KOrderedFlake
       s[:counter] = 0
       s[:time] = time
     else
-      raise KOrderedFlake::TimeDiscontinuityException.new("Time may not run backwards")
+      raise KOrderedFlake::TimeDiscontinuityException.new("Time may not run backwards #{state[:time]} > #{time}")
     end
     s
   end
@@ -58,4 +61,3 @@ module KOrderedFlake
   end
 
 end
-

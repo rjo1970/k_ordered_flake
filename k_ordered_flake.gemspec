@@ -6,7 +6,7 @@ require 'k_ordered_flake/version'
 Gem::Specification.new do |spec|
   spec.name          = "k_ordered_flake"
   spec.version       = KOrderedFlake::VERSION
-  spec.authors       = ["R.J. osborne"]
+  spec.authors       = ["R.J. Osborne"]
   spec.email         = ["rjo1970@gmail.com"]
 
   spec.summary       = %q{A K-Ordered snowflake implementation}
